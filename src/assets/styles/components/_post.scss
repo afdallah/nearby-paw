@@ -1,0 +1,79 @@
+// Post card
+.post {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: $gap;
+
+  &__owner {
+    width: 80px;
+    max-width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid $color-main;
+    flex-grow: 1;
+    margin-right: $gap;
+    opacity: .4;
+  }
+
+  &__card {
+    display: flex;
+    flex: 1;
+    border: 1px solid rgba($color-main, 0.3);
+    border-radius: 5px;
+    padding: $gap;
+  }
+
+  // Left part
+  &__left {
+    max-width: 297px;
+    margin-right: $gap;
+    flex: 1;
+  }
+
+  &__img {
+    width: 100%;
+    // height: 248px;
+    height: 190px;
+    overflow: hidden;
+    border-radius: 5px;
+    margin-bottom: $gap
+  }
+
+  // engagment
+  &__engagement {
+    display: flex;
+
+    div {
+      display: flex;
+      align-items: center;
+    }
+
+    img {
+      max-height: 20px;
+      margin-right: $gap / 4;
+    }
+
+    div:not(:last-child) {
+      margin-right: $gap;
+    }
+  }
+
+  // Right part
+  &__content {
+    flex: 1;
+  }
+
+  &__label {
+    font-size: 10px;
+    text-transform: uppercase;
+    font-weight: 800;
+    opacity: .5;
+    margin-bottom: 0;
+  }
+
+  .button {
+    width: 100%;
+    display: block;
+  }
+}

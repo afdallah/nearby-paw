@@ -1,0 +1,12 @@
+@import 'variables';
+@import 'mixins';
+@import 'normalize';
+@import 'base';
+@import './components/navbar';
+@import './components/icons';
+@import './components/avatar';
+@import './components/button';
+@import './components/post';
+
+// Pages
+@import './pages/home'

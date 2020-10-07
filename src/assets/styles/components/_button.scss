@@ -1,0 +1,37 @@
+.button {
+  height: 44px;
+  text-align: center;
+  border: 1px solid $color-main;
+  border-radius: 5px;
+  padding: 5px 20px;
+  cursor: pointer;
+  background-color: $color-main;
+  color: #fff;
+  transition: all 0.3s ease;
+  font-weight: bold;
+
+  &:hover {
+    background-color: #be90f9;
+  }
+
+  // Variations
+  &--green {
+    background-color: $color-accent;
+    border-color: $color-accent;
+
+    &:hover {
+      background-color: #6bd9ed;
+      border-color: #6bd9ed;
+    }
+  }
+
+  &--outline {
+    background-color: #fff;
+    color: $color-main;
+
+    &:hover {
+      background-color: $color-main;
+      color: #fff;
+    }
+  }
+}

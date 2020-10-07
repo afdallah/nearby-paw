@@ -1,0 +1,90 @@
+* {
+  box-sizing: border-box;
+  outline: none;
+}
+
+body {
+  font-family: $t-font-sans;
+  font-size: 14px;
+  line-height: 1.6;
+  color: $color-text;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+p {
+  margin-top: 0;
+}
+
+// App
+.app {
+  background-color: #eff0fb;
+}
+
+.main {
+  @include create-container;
+
+  min-height: calc(100vh - 60px);
+  padding: $gap 0;
+
+  &__inner {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+// Sidebar
+.sidebar {
+  max-width: 300px;
+  margin-right: $gap;
+  flex: 1;
+
+  &__inner {
+    padding: $gap;
+    background-color: #fff;
+    background: #fff;
+    border-radius: 5px;
+  }
+
+  .select {
+    margin-bottom: $gap;
+    cursor: pointer;
+
+    * {
+      cursor: pointer;
+    }
+  }
+
+  .button {
+    display: block;
+    width: 100%;
+  }
+}
+
+.content {
+  flex: 1;
+  background: #fff;
+  border-radius: 5px;
+  padding: $gap;
+}
+
+.callout {
+  width: 100%;
+  display: block;
+  height: 44px;
+  margin-bottom: $gap;
+  background-color: rgba($color-main, 0.3);
+  border: 1px solid darken(#e3e3e380, 10%);
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #7d54b1;
+
+  &:hover {
+    box-shadow: 0px 0px 1px 2px $color-main;
+  }
+}

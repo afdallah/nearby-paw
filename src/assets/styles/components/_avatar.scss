@@ -1,0 +1,13 @@
+.avatar {
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    &__img {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+    }
+}

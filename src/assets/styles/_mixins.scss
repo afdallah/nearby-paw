@@ -1,0 +1,5 @@
+@mixin create-container($max-width: 1244px) {
+  max-width: $max-width;
+  flex: 1;
+  margin: auto;
+}
