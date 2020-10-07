@@ -1,0 +1,43 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+
+  &__container {
+    max-width: 1244px;
+    flex: 1;
+    margin: auto;
+  }
+
+  &__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  // Menu
+  &__menu {
+    display: flex;
+    align-items: center;
+  }
+
+  $menu-gap: 10px;
+  .icon {
+    margin: 0 $menu-gap;
+    max-height: 20px;
+  }
+
+  .avatar {
+    margin-left: $menu-gap;
+  }
+}
+
+.logo {
+  &__img {
+    max-width: 100px;
+    display: block;
+  }
+}
