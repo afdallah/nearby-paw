@@ -3,6 +3,8 @@ import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
 import heartIcon from './assets/images/heart.svg'
 import commentIcon from './assets/images/comment.svg'
+import { HiHeart, HiOutlineHeart } from 'react-icons/hi'
+import { FaRegComments } from 'react-icons/fa'
 
 function App() {
   return (
@@ -18,8 +20,8 @@ function App() {
 
             {/* Posts */}
             <div className="posts">
-              {[1, 2, 3, 4].map(() => (
-                <div className="post">
+              {[1, 2, 3, 4].map((i) => (
+                <div className="post" key={i}>
                   <div className="post__owner avatar">
                     <img src="avatar__img" alt="" />
                   </div>
@@ -32,11 +34,13 @@ function App() {
 
                       <div className="post__engagement">
                         <div className="post__likes">
-                          <img src={heartIcon} alt="" />
+                          {/* <img src={heartIcon} alt="" /> */}
+                          <HiOutlineHeart size="25px" />
                           <span>1352 Likes</span>
                         </div>
                         <div className="post__comments">
-                          <img src={commentIcon} alt="" />
+                          {/* <img src={commentIcon} alt="" /> */}
+                          <FaRegComments size="20px" />
                           <span>24 Comments</span>
                         </div>
                       </div>
@@ -66,7 +70,9 @@ function App() {
                         </div>
                       </div>
 
-                      <button className="button button--outline">Request a meeting</button>
+                      <button className="button button--outline">
+                        Request a meeting
+                      </button>
                     </div>
                   </div>
                 </div>

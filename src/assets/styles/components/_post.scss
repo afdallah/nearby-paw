@@ -13,7 +13,7 @@
     border: 1px solid $color-main;
     flex-grow: 1;
     margin-right: $gap;
-    opacity: .4;
+    opacity: 0.4;
   }
 
   &__card {
@@ -37,7 +37,7 @@
     height: 190px;
     overflow: hidden;
     border-radius: 5px;
-    margin-bottom: $gap
+    margin-bottom: $gap;
   }
 
   // engagment
@@ -49,6 +49,7 @@
       align-items: center;
     }
 
+    svg,
     img {
       max-height: 20px;
       margin-right: $gap / 4;
@@ -68,7 +69,7 @@
     font-size: 10px;
     text-transform: uppercase;
     font-weight: 800;
-    opacity: .5;
+    opacity: 0.5;
     margin-bottom: 0;
   }
 

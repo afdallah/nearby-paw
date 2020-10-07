@@ -1,4 +1,7 @@
 .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   height: 44px;
   text-align: center;
   border: 1px solid $color-main;
@@ -12,6 +15,10 @@
 
   &:hover {
     background-color: #be90f9;
+  }
+
+  svg {
+    margin-right: 10px
   }
 
   // Variations
