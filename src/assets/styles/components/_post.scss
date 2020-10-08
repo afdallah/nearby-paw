@@ -8,6 +8,10 @@
 
   &:nth-child(odd) {
     background: #be90f908;
+
+    .post__card {
+      background-color: transparent;
+    }
   }
 
   &:first-child {
