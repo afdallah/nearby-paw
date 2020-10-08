@@ -34,7 +34,7 @@ function App() {
                   <div className="post__card">
                     <div className="post__left">
                       <div className="post__img">
-                        <img src="http://placekitten.com/g/400/400" alt="" />
+                        <img src={`http://placekitten.com/g/40${i}/400`} alt="" />
                       </div>
 
                       <div className="post__engagement">
