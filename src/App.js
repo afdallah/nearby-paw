@@ -4,7 +4,9 @@ import Sidebar from './components/Sidebar'
 import heartIcon from './assets/images/heart.svg'
 import commentIcon from './assets/images/comment.svg'
 import { HiHeart, HiOutlineHeart } from 'react-icons/hi'
-import { FaRegComments } from 'react-icons/fa'
+import { FaRegComments, FaPaw } from 'react-icons/fa'
+import { FiPlus } from 'react-icons/fi'
+import avatarImg from './assets/images/avatar.jpg'
 
 function App() {
   return (
@@ -16,14 +18,17 @@ function App() {
           <Sidebar />
 
           <section className="content">
-            <button className="callout">Write a post</button>
+            <button className="button callout">
+              <FiPlus size={20} />
+              Write a Post
+            </button>
 
             {/* Posts */}
             <div className="posts">
               {[1, 2, 3, 4].map((i) => (
                 <div className="post" key={i}>
                   <div className="post__owner avatar">
-                    <img src="avatar__img" alt="" />
+                    <img className="avatar__img" src={avatarImg} alt="" />
                   </div>
 
                   <div className="post__card">
@@ -49,7 +54,7 @@ function App() {
                     <div className="post__content">
                       <div style={{ display: 'flex' }}>
                         <div
-                          style={{ width: 'calc(50% - 15px)', marginRight: 30 }}
+                          style={{ width: 'calc(65% - 15px)', marginRight: 30 }}
                         >
                           <p className="post__label">Name</p>
                           <p className="post__value">Justin</p>
@@ -70,7 +75,8 @@ function App() {
                         </div>
                       </div>
 
-                      <button className="button button--outline">
+                      <button className="button">
+                        <FaPaw size={20} />
                         Request a meeting
                       </button>
                     </div>

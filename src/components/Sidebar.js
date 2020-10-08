@@ -21,7 +21,8 @@ function Sidebar() {
       <div className="sidebar__inner">
         <form action="">
           <Select components={animatedComponents} placeholder="Search Location" className="select" options={locationOpts} />
-          <Select components={animatedComponents} placeholder="Select animal type" className="select" options={animalTypeOpts} />
+          <Select components={animatedComponents} placeholder="Select Animal Type" className="select" options={animalTypeOpts} />
+          <Select components={animatedComponents} placeholder="Select Gender" className="select" options={animalTypeOpts} />
 
           {/* <input type="submit" className="button button--outline" value="Search" /> */}
           <button className="button button--outline">

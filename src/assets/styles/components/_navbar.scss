@@ -2,14 +2,16 @@
   display: flex;
   align-items: center;
   height: 60px;
-  border: 1px solid #ddd;
+  // border: 1px solid #ddd;
   background-color: #fff;
+  box-shadow: 0 3px 10px #947bb41a;
 
   &__container {
     max-width: 1244px;
     flex: 1;
     margin: auto;
   }
+
 
   &__row {
     display: flex;
