@@ -2,11 +2,21 @@
 .post {
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: $gap;
+  // margin-bottom: $gap;
+  padding: $gap;
+  border-bottom: 1px solid #e7e7e7;
+
+  &:nth-child(odd) {
+    background: #a9a5e305;
+
+    .post__card {
+      background-color: transparent;
+    }
+  }
 
   &:first-child {
-    margin-top: 50px;
-    // background: #be90f908;
+    margin-top: 75px;
+    border-top: 1px solid #e7e7e7;
   }
 
   &__owner {
@@ -25,8 +35,8 @@
   &__card {
     display: flex;
     flex: 1;
-    padding: $gap;
-    border: 1px solid rgba($color-main, 0.3);
+    // padding: $gap;
+    // border: 1px solid rgba($color-main, 0.3);
     border-radius: 5px;
     // box-shadow: 0 3px 10px #947bb41a;
     background-color: #fff;
@@ -45,7 +55,7 @@
     height: 190px;
     overflow: hidden;
     border-radius: 5px;
-    margin-bottom: $gap / 2;
+    margin-bottom: calc(30px / 2);
   }
 
   // engagment
@@ -97,6 +107,11 @@
     // position: absolute;
     // bottom: 0;
     // left: 0;
+    background: transparent;
     width: 100%;
+
+    &:hover {
+      background-color: $color-main;
+    }
   }
 }

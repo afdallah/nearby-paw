@@ -75,7 +75,7 @@ function App() {
                         </div>
                       </div>
 
-                      <button className="button">
+                      <button className="button button--outline">
                         <FaPaw size={20} />
                         Request a meeting
                       </button>
