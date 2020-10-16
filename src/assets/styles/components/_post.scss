@@ -7,7 +7,7 @@
   border-bottom: 1px solid #e7e7e7;
 
   &:nth-child(odd) {
-    background: #be90f908;
+    background: #a9a5e305;
 
     .post__card {
       background-color: transparent;
@@ -55,7 +55,7 @@
     height: 190px;
     overflow: hidden;
     border-radius: 5px;
-    margin-bottom: $gap / 2;
+    margin-bottom: calc(30px / 2);
   }
 
   // engagment
@@ -107,6 +107,11 @@
     // position: absolute;
     // bottom: 0;
     // left: 0;
+    background: transparent;
     width: 100%;
+
+    &:hover {
+      background-color: $color-main;
+    }
   }
 }
