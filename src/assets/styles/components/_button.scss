@@ -2,7 +2,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 44px;
+  height: 38px;
   text-align: center;
   border: 1px solid $color-main;
   border-radius: 5px;
@@ -14,11 +14,12 @@
   font-weight: bold;
 
   &:hover {
-    background-color: #be90f9;
+    background-color: darken($color-main, 3%);
   }
 
   svg {
-    margin-right: 10px
+    margin-right: 10px;
+    height: 20px;
   }
 
   // Variations
@@ -39,6 +40,18 @@
     &:hover {
       background-color: $color-main;
       color: #fff;
+    }
+  }
+
+  // With icon
+  &--google {
+    background-color: #F9F9FF;
+    color: $color-text;
+    border-color: #EEEEFE;
+    border-width: 2px;
+
+    &:hover {
+      background-color: #fff;
     }
   }
 }

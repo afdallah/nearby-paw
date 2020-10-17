@@ -1,0 +1,22 @@
+.separator {
+  position: relative;
+  display: block;
+  height: 5px;
+  width: 100%;
+  border-bottom: 1px solid #EEEEFE;
+  margin-top: $gap;
+  margin-bottom: $gap;
+
+  span {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    display: inline-block;
+    background-color: white;
+    line-height: 1;
+    bottom: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-transform: uppercase;
+  }
+}

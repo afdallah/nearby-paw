@@ -1,0 +1,39 @@
+.page--signup {
+  background-color: #fff;
+  height: 100vh;
+
+  .flex {
+    height: 100%;
+  }
+
+  .h2 {
+    font-size: 30px;
+    margin-bottom: 0;
+  }
+
+  .form-container {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    flex: 1 1 60vw;
+  }
+
+  .illustration-container {
+    flex: 1 1 40vw;
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .optin {
+    max-width: 420px;
+    margin: auto;
+  }
+
+  .button {
+    width: 100%;
+  }
+}

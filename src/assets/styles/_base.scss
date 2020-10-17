@@ -19,6 +19,15 @@ p {
   margin-top: 0;
 }
 
+a {
+  color: $color-main
+}
+
+// Utils
+.flex  {
+  display: flex;
+}
+
 // App
 .app {
   background-color: #eff0fb;
