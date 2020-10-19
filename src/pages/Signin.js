@@ -24,8 +24,6 @@ function Signin({ location, history }) {
     mode: 'all',
   });
 
-  const { score, feedback } = pwdStrength(password);
-
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
   const onSubmit = async (data) => {

@@ -16,9 +16,9 @@ import Signin from './pages/Signin';
 // Private route
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const token = localStorage.getItem('access_token');
-  const isAuthenticated = token;
-  const user = token && jwtDecode(localStorage.getItem('access_token'));
+  const isAuthenticated = token && jwtDecode(localStorage.getItem('access_token'));
 
+  console.log('PROCESS', process.env)
   return (
     <Route
       {...rest}
