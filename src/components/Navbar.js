@@ -1,6 +1,6 @@
 import React from 'react'
 import iconComment from '../assets/images/comment.svg'
-import logo from '../assets/images/logo.svg'
+import logo from '../assets/images/logo/logo-pet.svg'
 import bell from '../assets/images/bell.svg'
 
 function Navbar() {

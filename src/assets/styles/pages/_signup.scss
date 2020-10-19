@@ -1,4 +1,5 @@
-.page--signup {
+.page--signup,
+.page--signin {
   background-color: #fff;
   height: 100vh;
 
@@ -15,11 +16,11 @@
     display: flex;
     align-items: center;
     margin: auto;
-    flex: 1 1 60vw;
+    flex: 1 1 50vw;
   }
 
   .illustration-container {
-    flex: 1 1 40vw;
+    flex: 1 1 50vw;
 
     img {
       height: 100%;
@@ -35,5 +36,19 @@
 
   .button {
     width: 100%;
+  }
+}
+
+.page--signin {
+  .optin {
+    flex: 1 1 400px
+  }
+
+  .form-container {
+    flex: 1 1 50vw;
+  }
+
+  .illustration-container {
+    flex: 1 1 50vw;
   }
 }

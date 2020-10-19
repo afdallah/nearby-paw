@@ -13,7 +13,6 @@ function isUniqueSlug(slug) {
 
 function Layout(props) {
   const { children, location } = props
-  console.log(isUniqueSlug(location.pathname))
 
   return (
     <div className="app">

@@ -10,7 +10,7 @@
   cursor: pointer;
   background-color: $color-main;
   color: #fff;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease-in;
   font-weight: bold;
 
   &:hover {
@@ -20,6 +20,15 @@
   svg {
     margin-right: 10px;
     height: 20px;
+  }
+
+  &__spinner {
+    display: flex;
+    align-items: center;
+
+    svg {
+      animation: spinning .3s linear infinite;
+    }
   }
 
   // Variations
@@ -53,5 +62,15 @@
     &:hover {
       background-color: #fff;
     }
+  }
+}
+
+@keyframes spinning {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
   }
 }

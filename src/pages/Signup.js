@@ -1,8 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import pwdStrength from 'zxcvbn';
+import classNames from 'classnames';
+import { Link } from 'react-router-dom';
 
-function Signup() {
-  const { register, handleSubmit } = useForm();
+import Button from '../components/Button';
+import API from '../api';
+
+const strength = {
+  0: 'Worst',
+  1: 'Bad',
+  2: 'Weak',
+  3: 'Good',
+  4: 'Strong',
+};
+
+function Signup({ history }) {
+  const [password, setPassword] = useState('');
+  const [passwordFocus, setPasswordFocus] = useState(false);
+  const [isSpinning, setIsSpinning] = useState(false);
+  const [tos, setTos] = useState(false);
+  const { register, watch, errors, handleSubmit } = useForm({
+    mode: 'all',
+  });
+
+  const { score, feedback } = pwdStrength(password);
+
+  const handlePasswordChange = (e) => setPassword(e.target.value);
+  const onTosChange = (e) => setTos(!!e.target.value);
+
+  const onSubmit = async (data) => {
+    setIsSpinning(true);
+
+    try {
+      await API.post('/user/register', data);
+      setIsSpinning(false);
+
+      history.push({
+        pathname: '/signin',
+        state: {
+          email: data.email
+        }
+      })
+    } catch(err) {
+      console.log(err)
+      setIsSpinning(false);
+    }
+  };
+
+  // Classnames
+  const hintClass = classNames({
+    'strength-hint': true,
+    [`${strength[score].toLowerCase()}`]: strength[score],
+  });
+
   return (
     <div className="page page--signup">
       <div className="flex">
@@ -13,37 +64,13 @@ function Signup() {
               Give us some of your information to get free access to petmatcher
             </p>
 
-            <button class="button button--google">
-              <svg
-                viewBox="0 0 533.5 544.3"
-                xmlns="http://www.w3.org/2000/svg"
-                class="icon"
-              >
-                <path
-                  d="M533.5 278.4c0-18.5-1.5-37.1-4.7-55.3H272.1v104.8h147c-6.1 33.8-25.7 63.7-54.4 82.7v68h87.7c51.5-47.4 81.1-117.4 81.1-200.2z"
-                  fill="#4285f4"
-                />
-                <path
-                  d="M272.1 544.3c73.4 0 135.3-24.1 180.4-65.7l-87.7-68c-24.4 16.6-55.9 26-92.6 26-71 0-131.2-47.9-152.8-112.3H28.9v70.1c46.2 91.9 140.3 149.9 243.2 149.9z"
-                  fill="#34a853"
-                />
-                <path
-                  d="M119.3 324.3c-11.4-33.8-11.4-70.4 0-104.2V150H28.9c-38.6 76.9-38.6 167.5 0 244.4l90.4-70.1z"
-                  fill="#fbbc04"
-                />
-                <path
-                  d="M272.1 107.7c38.8-.6 76.3 14 104.4 40.8l77.7-77.7C405 24.6 339.7-.8 272.1 0 169.2 0 75.1 58 28.9 150l90.4 70.1c21.5-64.5 81.8-112.4 152.8-112.4z"
-                  fill="#ea4335"
-                />
-              </svg>
-              Sign up with Google
-            </button>
+            <Button variant="google">Sign up with Google</Button>
 
             <div className="separator">
               <span>Or</span>
             </div>
 
-            <form action="">
+            <form action="" onSubmit={handleSubmit(onSubmit)}>
               <div className="fields">
                 <div className="field">
                   <label htmlFor="">Email</label>
@@ -51,8 +78,17 @@ function Signup() {
                     className="input"
                     type="email"
                     name="email"
-                    ref={register}
+                    ref={register({
+                      required: 'Email is required!',
+                      pattern: {
+                        value: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                        message: 'Not a valid email format',
+                      },
+                    })}
                   />
+                  {errors.email && (
+                    <p className="error">{errors.email.message}</p>
+                  )}
                 </div>
 
                 <div className="field">
@@ -61,38 +97,89 @@ function Signup() {
                     className="input"
                     type="text"
                     name="username"
-                    ref={register}
+                    ref={register({
+                      required: 'Username is required!',
+                      minLength: {
+                        value: 4,
+                        message: 'Username is too short',
+                      },
+                    })}
                   />
+                  {errors.username && (
+                    <p className="error">{errors.username.message}</p>
+                  )}
                 </div>
               </div>
 
-              <div className="field">
-                <label htmlFor="">Password</label>
-                <input
-                  className="input"
-                  type="password"
-                  name="password"
-                  ref={register}
-                />
-              </div>
+              <div className="fields">
+                <div className="field">
+                  <label htmlFor="">Password</label>
+                  <input
+                    className="input"
+                    type="password"
+                    name="password"
+                    onChange={handlePasswordChange}
+                    onFocus={(e) => setPasswordFocus(!passwordFocus)}
+                    onBlur={(e) => setPasswordFocus(!passwordFocus)}
+                    ref={register({ required: 'Password is required!' })}
+                  />
 
-              <div className="field">
-                <label htmlFor="">Password Confirmation</label>
-                <input
-                  className="input"
-                  type="password"
-                  name="password_confirmation"
-                  ref={register}
-                />
+                  {password && passwordFocus && (
+                    <div className={hintClass}>
+                      Password strength: <strong>{strength[score]}</strong>
+                      <ul className="strength-hint__suggestions">
+                        {feedback.suggestions.map((suggestion, i) => {
+                          return <li key={i}>{suggestion}</li>;
+                        })}
+                      </ul>
+                      <ul className="strength-bar">
+                        <li className="strength-bar__item"></li>
+                        <li className="strength-bar__item"></li>
+                        <li className="strength-bar__item"></li>
+                        <li className="strength-bar__item"></li>
+                        <li className="strength-bar__item"></li>
+                      </ul>
+                    </div>
+                  )}
+
+                  {errors.password && (
+                    <p className="error">{errors.password.message}</p>
+                  )}
+                </div>
+
+                <div className="field">
+                  <label htmlFor="">Password Confirmation</label>
+                  <input
+                    className="input"
+                    type="password"
+                    name="password_confirmation"
+                    ref={register({
+                      required: 'Password confirmation is required!',
+                      validate: (value) =>
+                        value === watch('password') || "Passwords don't match.",
+                    })}
+                  />
+
+                  {errors.password_confirmation && (
+                    <p className="error">
+                      {errors.password_confirmation.message}
+                    </p>
+                  )}
+                </div>
               </div>
 
               <div className="field">
                 <label htmlFor="label-checkbox" className="label-checkbox">
                   <input
+                    checked={tos}
                     className="input input--checkbox"
                     type="checkbox"
                     name="tos"
-                    id=""
+                    onChange={onTosChange}
+                    ref={register({
+                      required:
+                        'You have to agree with the terms and conditions',
+                    })}
                   />
                   <span>
                     By creating an account you agree to the{' '}
@@ -100,16 +187,22 @@ function Signup() {
                     <a href="#">privacy policy</a>
                   </span>
                 </label>
+                {errors.tos && <p className="error">{errors.tos.message}</p>}
               </div>
 
               <div className="field field--button">
-                <input
-                  className="button"
-                  type="submit"
-                  value="Create account"
-                />
+                <Button type="submit" disabled={!tos} isSpinning={isSpinning}>
+                  Create account
+                </Button>
               </div>
             </form>
+
+            <div className="text-center form-footer">
+              <p>
+                Already have an account? <Link to="/signin">Sign in</Link>
+              </p>
+              <a href="#">Forgot password?</a>
+            </div>
           </div>
         </section>
 
