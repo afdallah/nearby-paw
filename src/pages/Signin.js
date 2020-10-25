@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import pwdStrength from 'zxcvbn';
-import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 
-import Button from '../components/Button';
 import API from '../api';
+import Button from '../components/Button';
+import Separator from '../components/Separator';
+import notification from '../components/Notification';
 
 const strength = {
   0: 'Worst',
@@ -16,28 +16,33 @@ const strength = {
 };
 
 function Signin({ location, history }) {
-  const [password, setPassword] = useState('');
   const [passwordFocus, setPasswordFocus] = useState(false);
   const [isSpinning, setIsSpinning] = useState(false);
 
-  const { register, watch, errors, handleSubmit } = useForm({
-    mode: 'all',
+  const { register, errors, handleSubmit } = useForm({
+    mode: 'onTouched',
   });
-
-  const handlePasswordChange = (e) => setPassword(e.target.value);
 
   const onSubmit = async (data) => {
     setIsSpinning(true);
-
     try {
-      const res = await API.post('/user/login', data)
+      const res = await API.post('/user/login', data);
 
-      localStorage.setItem('access_token', res.data.token)
+      localStorage.setItem('access_token', res.data.token);
+
+      notification.success({
+        message: res.data.message,
+      });
+
       history.push({
         pathname: '/',
-      })
+      });
     } catch (err) {
-      console.log(err)
+      notification.error({
+        message: err.response.data.message,
+      });
+    } finally {
+      // setIsSpinning(false);
     }
   };
 
@@ -51,9 +56,7 @@ function Signin({ location, history }) {
 
             <Button variant="google">Sign in with Google</Button>
 
-            <div className="separator">
-              <span>Or</span>
-            </div>
+            <Separator text="Or" />
 
             <form action="" onSubmit={handleSubmit(onSubmit)}>
               <div className="field">
@@ -82,7 +85,6 @@ function Signin({ location, history }) {
                   className="input"
                   type="password"
                   name="password"
-                  onChange={handlePasswordChange}
                   onFocus={(e) => setPasswordFocus(!passwordFocus)}
                   onBlur={(e) => setPasswordFocus(!passwordFocus)}
                   ref={register({ required: 'Password is required!' })}
@@ -94,7 +96,11 @@ function Signin({ location, history }) {
               </div>
 
               <div className="field field--button">
-                <Button type="submit" isSpinning={isSpinning}>
+                <Button
+                  type="submit"
+                  isSpinning={isSpinning}
+                  disabled={Object.keys(errors).length}
+                >
                   Sign in
                 </Button>
               </div>

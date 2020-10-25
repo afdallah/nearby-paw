@@ -3,8 +3,10 @@ import { useForm } from 'react-hook-form';
 import pwdStrength from 'zxcvbn';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
+import notification from '../components/Notification';
 
 import Button from '../components/Button';
+import Separator from '../components/Separator';
 import API from '../api';
 
 const strength = {
@@ -21,7 +23,7 @@ function Signup({ history }) {
   const [isSpinning, setIsSpinning] = useState(false);
   const [tos, setTos] = useState(false);
   const { register, watch, errors, handleSubmit } = useForm({
-    mode: 'all',
+    mode: 'onTouched',
   });
 
   const { score, feedback } = pwdStrength(password);
@@ -33,17 +35,23 @@ function Signup({ history }) {
     setIsSpinning(true);
 
     try {
-      await API.post('/user/register', data);
-      setIsSpinning(false);
+      const res = await API.post('/user/register', data);
+
+      notification.success({
+        message: res.data.message,
+      });
 
       history.push({
         pathname: '/signin',
         state: {
-          email: data.email
-        }
-      })
-    } catch(err) {
-      console.log(err)
+          email: data.email,
+        },
+      });
+    } catch (err) {
+      notification.error({
+        message: err.response.data.message,
+      });
+    } finally {
       setIsSpinning(false);
     }
   };
@@ -66,9 +74,7 @@ function Signup({ history }) {
 
             <Button variant="google">Sign up with Google</Button>
 
-            <div className="separator">
-              <span>Or</span>
-            </div>
+            <Separator text="Or" />
 
             <form action="" onSubmit={handleSubmit(onSubmit)}>
               <div className="fields">
@@ -121,7 +127,10 @@ function Signup({ history }) {
                     onChange={handlePasswordChange}
                     onFocus={(e) => setPasswordFocus(!passwordFocus)}
                     onBlur={(e) => setPasswordFocus(!passwordFocus)}
-                    ref={register({ required: 'Password is required!' })}
+                    ref={register({
+                      required: 'Password is required!',
+                      validate: (value) => score > 3 || 'You password is weak!',
+                    })}
                   />
 
                   {password && passwordFocus && (
@@ -191,7 +200,11 @@ function Signup({ history }) {
               </div>
 
               <div className="field field--button">
-                <Button type="submit" disabled={!tos} isSpinning={isSpinning}>
+                <Button
+                  type="submit"
+                  disabled={Object.keys(errors).length || !tos}
+                  isSpinning={isSpinning}
+                >
                   Create account
                 </Button>
               </div>
@@ -201,6 +214,7 @@ function Signup({ history }) {
               <p>
                 Already have an account? <Link to="/signin">Sign in</Link>
               </p>
+
               <a href="#">Forgot password?</a>
             </div>
           </div>

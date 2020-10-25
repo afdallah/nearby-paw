@@ -11,6 +11,9 @@
 @import './components/modal';
 @import './components/post';
 
+// Vendors
+@import './vendors/rc-notification';
+
 // Pages
 @import './pages/home';
 @import './pages/signup';
