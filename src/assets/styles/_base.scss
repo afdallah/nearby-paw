@@ -23,6 +23,10 @@ a {
   color: $color-main
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 // Utils
 .flex  {
   display: flex;
