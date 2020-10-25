@@ -98,16 +98,16 @@ function Signup({ history }) {
                 </div>
 
                 <div className="field">
-                  <label htmlFor="">Username</label>
+                  <label htmlFor="">Full name</label>
                   <input
                     className="input"
                     type="text"
-                    name="username"
+                    name="fullName"
                     ref={register({
-                      required: 'Username is required!',
+                      required: 'Fullname is required!',
                       minLength: {
                         value: 4,
-                        message: 'Username is too short',
+                        message: 'Fullname is too short',
                       },
                     })}
                   />
