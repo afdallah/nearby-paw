@@ -8,13 +8,12 @@ function Button({ icon, variant, children, type, isSpinning, className, ...rest 
   const btnClass = classNames({
     button: true,
     [`button--${variant}`]: variant,
-    ...className
+    [`${className}`]: className
   })
 
   return (
     <button className={btnClass} type={type} {...rest}>
       {!icon ? <Icon type={variant} /> : {icon}}
-
 
       {isSpinning && (
         <div className="button__spinner">
