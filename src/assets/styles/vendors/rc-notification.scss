@@ -27,6 +27,8 @@
   }
 
   .error {
+    color: $color-text;
+
     svg {
       color: $color-error;
     }

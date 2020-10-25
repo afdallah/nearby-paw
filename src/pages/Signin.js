@@ -42,7 +42,7 @@ function Signin({ location, history }) {
         message: err.response.data.message,
       });
     } finally {
-      // setIsSpinning(false);
+      setIsSpinning(false);
     }
   };
 

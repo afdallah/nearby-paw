@@ -16,20 +16,21 @@ import Signin from './pages/Signin';
 // Private route
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const token = localStorage.getItem('access_token');
-  const isAuthenticated = token && jwtDecode(localStorage.getItem('access_token'));
+  const decoded = token && jwtDecode(localStorage.getItem('access_token'));
 
-  console.log('PROCESS', process.env)
   return (
     <Route
       {...rest}
       render={(props) =>
-        isAuthenticated ? (
-          <Component {...props} />
+        decoded ? (
+          <Component {...props} {...decoded} />
         ) : (
           <Redirect
             to={{
               pathname: '/signin',
-              state: { from: props.location },
+              state: {
+                from: props.location,
+              },
             }}
           />
         )
