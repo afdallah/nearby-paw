@@ -4,7 +4,6 @@
   top: 0;
   display: flex;
   align-items: center;
-  height: 60px;
   z-index: 2;
   // border: 1px solid #ddd;
   background-color: #fff;
@@ -16,18 +15,19 @@
     margin: auto;
   }
 
-
   &__row {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
+    height: 60px;
   }
 
   // Menu
   &__menu {
     display: flex;
     align-items: center;
+    height: 100%;
   }
 
   $menu-gap: 10px;
@@ -38,6 +38,17 @@
 
   .avatar {
     margin-left: $menu-gap;
+    margin-right: $menu-gap;
+    height: 28px;
+    width: 28px;
+    // box-shadow: 0 0 0 2px rgba($color-text, 0.2)
+  }
+
+  .username {
+    // margin-left: $menu-gap;
+    display: flex;
+    align-items: center;
+    height: 100%;
   }
 }
 
@@ -45,5 +56,61 @@
   &__img {
     max-width: 100px;
     display: block;
+  }
+}
+
+// Dropdown
+.dropdown {
+  position: relative;
+
+  &:hover {
+    .dropdown__menu {
+      opacity: 1;
+      visibility: visible;
+      transform: perspective(0) rotateX(0deg);
+    }
+  }
+
+  &__menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100%;
+    padding: 3px 0;
+    // margin-top: 10px;
+    background: #fff;
+    min-width: 100px;
+    width: 100%;
+    border-radius: $border-radius;
+    box-shadow: 0 3px 10px rgba($color-text, 0.2);
+    transform: perspective(600px) rotateX(-90deg);
+    transition: transform 0.1s ease;
+    transform-origin: top center;
+    // opacity: 0;
+    // visibility: hidden;
+    z-index: 1;
+
+    &:before {
+      position: absolute;
+      top: -6px;
+      right: 7px;
+      content: '';
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 8px 7px 8px;
+      border-color: transparent transparent #fff transparent;
+      z-index: 1;
+    }
+
+    &-item {
+      padding: 4px 12px;
+      background: #fff;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: rgba(#000, 0.01);
+      }
+    }
   }
 }

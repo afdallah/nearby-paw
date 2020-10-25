@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
 
 // Load files
 import iconComment from '../assets/images/comment.svg';
 import logo from '../assets/images/logo/logo-pet.svg';
 import bell from '../assets/images/bell.svg';
 
-function Navbar({ history }) {
+function Navbar({ history, ...rest }) {
   const handleLogout = () => {
     localStorage.removeItem('access_token');
     history.push('/signin');
   };
+
+  const user = jwtDecode(localStorage.getItem('access_token'));
 
   return (
     <nav className="navbar">
@@ -27,12 +30,23 @@ function Navbar({ history }) {
             <div className="avatar">
               <img
                 className="avatar__img"
-                src="https://ui-avatars.com/api/?name=John+Doe"
+                src={`https://ui-avatars.com/api/?name=${user && user.email.split('@')[0]}`}
                 alt="avatar"
               />
             </div>
 
-            <div className="clickable" onClick={handleLogout}>Logout</div>
+            <div className="dropdown username">
+              {user && user.email.split('@')[0]}
+
+              <div className="dropdown__menu">
+                <div
+                  className="dropdown__menu-item clickable"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
