@@ -7,14 +7,6 @@ import Button from '../components/Button';
 import Separator from '../components/Separator';
 import notification from '../components/Notification';
 
-const strength = {
-  0: 'Worst',
-  1: 'Bad',
-  2: 'Weak',
-  3: 'Good',
-  4: 'Strong',
-};
-
 function Signin({ location, history }) {
   const [passwordFocus, setPasswordFocus] = useState(false);
   const [isSpinning, setIsSpinning] = useState(false);
@@ -69,7 +61,7 @@ function Signin({ location, history }) {
                   ref={register({
                     required: 'Email is required!',
                     pattern: {
-                      value: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                      value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                       message: 'Not a valid email format',
                     },
                   })}
@@ -110,7 +102,7 @@ function Signin({ location, history }) {
               <p>
                 Don't have an account? <Link to="/signup">Signup</Link>
               </p>
-              <a href="#">Forgot password?</a>
+              <div className="link">Forgot password?</div>
             </div>
           </div>
         </section>

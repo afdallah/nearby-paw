@@ -18,12 +18,14 @@ function Home(props) {
   const [posts, setPosts] = useState([]);
   const [uploaded, setUploaded] = useState([]);
   const [modalActive, setModalActive] = useState(false);
-  const { register, errors, handleSubmit } = useForm({
+  const [isLoading, setIsLoading] = useState(false);
+  const { register, errors } = useForm({
     mode: 'onTouched',
   });
 
   useEffect(() => {
     const fetchPosts = async () => {
+      setIsLoading(true);
       try {
         const posts = await Api.get('/post', {
           headers: {
@@ -34,6 +36,8 @@ function Home(props) {
         setPosts(posts.data.data);
       } catch (err) {
         notification.err({ message: err.response.data.message });
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -188,10 +192,7 @@ function Home(props) {
         <Sidebar />
 
         <section className="content">
-          <Button
-            className="callout"
-            onClick={() => setModalActive(true)}
-          >
+          <Button className="callout" onClick={() => setModalActive(true)}>
             <FiPlus size={20} />
             Write a Post
           </Button>
@@ -200,23 +201,23 @@ function Home(props) {
 
           {/* Posts */}
           <div className="posts">
-            {posts.map((post) => (
-              <Suspense fallback={<h2>Loading...</h2>} key={post._id}>
-                <PostCard {...post} />
-              </Suspense>
-            ))}
-
-            {/* Modal create post */}
-            <Modal
-              header="Create post"
-              renderBody={renderModalBody}
-              active={modalActive}
-              // onOk
-              onClose={() => setModalActive(false)}
-            />
+            <Suspense fallback={<h2>Loading..</h2>}>
+              {posts.map((post) => (
+                <PostCard {...post} key={post._id} />
+              ))}
+            </Suspense>
           </div>
         </section>
       </div>
+
+      {/* Modal create post */}
+      <Modal
+        header="Create post"
+        renderBody={renderModalBody}
+        active={modalActive}
+        // onOk
+        onClose={() => setModalActive(false)}
+      />
     </main>
   );
 }

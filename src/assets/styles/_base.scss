@@ -27,6 +27,13 @@ a {
   cursor: pointer;
 }
 
+.link {
+  color: $color-main;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 500;
+}
+
 // Utils
 .flex  {
   display: flex;

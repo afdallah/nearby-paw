@@ -87,7 +87,7 @@ function Signup({ history }) {
                     ref={register({
                       required: 'Email is required!',
                       pattern: {
-                        value: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                        value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                         message: 'Not a valid email format',
                       },
                     })}
@@ -192,8 +192,8 @@ function Signup({ history }) {
                   />
                   <span>
                     By creating an account you agree to the{' '}
-                    <a href="#">terms of use</a> and our{' '}
-                    <a href="#">privacy policy</a>
+                    <span className="link">terms of use</span> and our{' '}
+                    <span className="link">privacy policy</span>
                   </span>
                 </label>
                 {errors.tos && <p className="error">{errors.tos.message}</p>}
@@ -215,7 +215,7 @@ function Signup({ history }) {
                 Already have an account? <Link to="/signin">Sign in</Link>
               </p>
 
-              <a href="#">Forgot password?</a>
+              <div className="link">Forgot password?</div>
             </div>
           </div>
         </section>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 
@@ -13,7 +13,8 @@ function Navbar({ history, ...rest }) {
     history.push('/signin');
   };
 
-  const user = jwtDecode(localStorage.getItem('access_token'));
+  const token = localStorage.getItem('access_token')
+  const user = token && jwtDecode(token);
 
   return (
     <nav className="navbar">
