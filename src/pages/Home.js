@@ -19,40 +19,84 @@ function Home(props) {
   const [uploaded, setUploaded] = useState([]);
   const [modalActive, setModalActive] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { register, errors } = useForm({
+  const [isSpinning, setIsSpinning] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const { register, errors, handleSubmit } = useForm({
     mode: 'onTouched',
   });
+  console.log(categories)
+
+  const fetchPosts = async () => {
+    setIsLoading(true);
+    try {
+      const posts = await Api.get('/post?page=1&limit=3');
+
+      setPosts(posts.data.data);
+    } catch (err) {
+      notification.err({ message: err.response.data.message });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const res = await Api.get('/category');
+
+      setCategories(res.data.data);
+    } catch (err) {
+      notification.err({ message: err.response.data.message });
+    }
+  };
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      setIsLoading(true);
-      try {
-        const posts = await Api.get('/post', {
-          headers: {
-            Authorization: localStorage.getItem('access_token'),
-          },
-        });
-
-        setPosts(posts.data.data);
-      } catch (err) {
-        notification.err({ message: err.response.data.message });
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchPosts();
+    fetchCategories();
   }, []);
 
+  const onSubmit = async (data) => {
+    if (uploaded || uploaded.length) {
+      setIsSpinning(true);
+      let formData = new FormData();
+
+      formData.append('image', uploaded[0]);
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          const element = data[key];
+
+          formData.append(key, element);
+        }
+      }
+
+      try {
+        await Api.post('/post', formData);
+
+        notification.success({
+          message: 'Post created',
+        });
+      } catch (error) {
+        notification.success({
+          message: `Failed due to ${error.response.data.message}`,
+        });
+      } finally {
+        setIsSpinning(false);
+        setModalActive(false);
+      }
+    }
+  };
+
   const renderModalBody = () => {
+    if (categories.length < 1) return 'Loading...';
+
     return (
       <>
-        <form action="">
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex">
             <div className="form-upload">
               <Dropzone
+                name="image"
                 onDrop={(acceptedFiles) => {
-                  setUploaded(URL.createObjectURL(acceptedFiles[0]));
+                  setUploaded(acceptedFiles);
                 }}
               >
                 {({ getRootProps, getInputProps }) => (
@@ -65,7 +109,7 @@ function Home(props) {
                         >
                           <GrFormClose />
                         </div>
-                        <img src={uploaded} alt="" />
+                        <img src={URL.createObjectURL(uploaded[0])} alt="" />
                       </div>
                     ) : (
                       <section className="drop-area">
@@ -90,7 +134,7 @@ function Home(props) {
                 <input
                   className="input"
                   type="text"
-                  name="petName"
+                  name="name"
                   ref={register({
                     required: 'Pet name is required!',
                   })}
@@ -106,7 +150,7 @@ function Home(props) {
                   <input
                     className="input"
                     type="number"
-                    name="petAge"
+                    name="age"
                     ref={register({ required: 'Pet age is required!' })}
                   />
 
@@ -125,8 +169,7 @@ function Home(props) {
                       required: 'Pet Category is required!',
                     })}
                   >
-                    <option>Category 1</option>
-                    <option>Category 2</option>
+                    {categories.length && categories.map(category => <option key={category._id} value={category.name}>{category.name}</option>)}
                   </select>
 
                   {errors.petCategory && (
@@ -173,13 +216,15 @@ function Home(props) {
           </div>
 
           <div
-            className="field field--button field--align-right"
-            style={{ marginTop: 10 }}
+            className="fields"
+            style={{ marginTop: 10, justifyContent: 'flex-end' }}
           >
             <Button type="submit" variant="outline" style={{ marginRight: 10 }}>
               Cancel
             </Button>
-            <Button type="submit">Create account</Button>
+            <Button type="submit" isSpinning={isSpinning}>
+              Create Post
+            </Button>
           </div>
         </form>
       </>
@@ -201,11 +246,15 @@ function Home(props) {
 
           {/* Posts */}
           <div className="posts">
-            <Suspense fallback={<h2>Loading..</h2>}>
-              {posts.map((post) => (
-                <PostCard {...post} key={post._id} />
-              ))}
-            </Suspense>
+            {isLoading ? (
+              'Loading...'
+            ) : (
+              <Suspense fallback={<h2>Loading..</h2>}>
+                {posts.map((post) => (
+                  <PostCard {...post} key={post._id} />
+                ))}
+              </Suspense>
+            )}
           </div>
         </section>
       </div>
@@ -215,7 +264,6 @@ function Home(props) {
         header="Create post"
         renderBody={renderModalBody}
         active={modalActive}
-        // onOk
         onClose={() => setModalActive(false)}
       />
     </main>

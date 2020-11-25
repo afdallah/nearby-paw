@@ -12,11 +12,13 @@ import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Layout from './pages/Layout';
 import Signin from './pages/Signin';
+import Api from './api';
 
 // Private route
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const token = localStorage.getItem('access_token');
   const decoded = token && jwtDecode(localStorage.getItem('access_token'));
+  Api.defaults.headers.common['Authorization'] = token;
 
   return (
     <Route
